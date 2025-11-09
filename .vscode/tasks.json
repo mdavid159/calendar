@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "ng",
+			"path": "calendar-frontend",
+			"problemMatcher": [],
+			"label": "npm: ng - calendar-frontend",
+			"detail": "ng"
+		}
+	]
+}

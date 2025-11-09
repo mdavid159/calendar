@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "OAuthLogin" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "birthDate" SET DATA TYPE TEXT;
