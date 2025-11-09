@@ -1,0 +1,12 @@
+<div class="register-form">
+    <h1>Register</h1>
+    <form (ngSubmit)="onSubmit()">
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
+        <input type="text" placeholder="Name" [(ngModel)]="name" name="name" />
+        <input type="text" placeholder="Surname" [(ngModel)]="surname" name="surname" />
+        <input type="date" placeholder="Birth Date" [(ngModel)]="birthDate" name="birthDate" />
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+</div>
