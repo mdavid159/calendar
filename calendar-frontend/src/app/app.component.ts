@@ -8,4 +8,6 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   standalone: true
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'calendar-frontend';
+}
