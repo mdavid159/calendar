@@ -1,0 +1,20 @@
+stages:
+  - build
+  - test
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:dind
+
+build_and_test:
+  stage: build
+  image: docker:27
+  script:
+    - docker build -t my-app:latest .
+    - docker run --rm my-app:latest npm run test
+    - docker run --rm my-app:latest npm run build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
