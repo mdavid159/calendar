@@ -5,6 +5,5 @@ export const RegisterSchema = z.object({
   name: z.string(),
   surname: z.string(),
   birthDate: z.string(),
-  gender: z.string(),
   password: z.string(),
 })
