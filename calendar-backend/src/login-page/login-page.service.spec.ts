@@ -72,6 +72,6 @@ describe('LoginPageService', () => {
       'birthDate',
     ]);
     expect(result).toContainKeys(['access_token', 'user']);
-    expect(resultUserField).toEqual(userField);
+    expect(resultUserField).toEqual(userField); // npm run test
   });
 });
