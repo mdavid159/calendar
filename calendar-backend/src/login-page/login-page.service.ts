@@ -7,7 +7,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from '../../dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { OauthTokenDto } from '../../dto/OauthToken.dto';
 import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()
@@ -18,6 +17,32 @@ export class LoginPageService {
   ) {}
 
   googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+  async generateTokens(userId: string, email: string) {
+    const accessToken = await this.jwtService.signAsync(
+      { sub: userId, username: email },
+      { expiresIn: '15m', secret: process.env.JWT_ACCESS_SECRET },
+    );
+
+    const refreshToken = await this.jwtService.signAsync(
+      { sub: userId, username: email },
+      { expiresIn: '7d', secret: process.env.JWT_REFRESH_SECRET },
+    );
+
+    return { accessToken, refreshToken };
+  }
+
+  async updateRefreshToken(userId: string, refreshToken: string) {
+    const hash = await bcrypt.hash(refreshToken, 10);
+    await this.prismaService.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        refreshTokenHash: hash,
+      },
+    });
+  }
 
   async loginWithEmailAndPassword(loginDto: LoginDto) {
     const { email, password } = loginDto;
@@ -48,14 +73,34 @@ export class LoginPageService {
     );
 
     if (isPasswordValid) {
-      const payload = { sub: user.id, username: user.email };
-      return {
-        access_token: this.jwtService.sign(payload),
-        user,
-      };
+      const tokens = await this.generateTokens(user.id, user.email);
+      await this.updateRefreshToken(user.id, tokens.refreshToken);
+
+      return { user, ...tokens };
     } else {
       throw new UnauthorizedException('Invalid password');
     }
+  }
+
+  async refreshTokens(userId: string, refreshToken: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user || !user.refreshTokenHash)
+      throw new UnauthorizedException('Access denied');
+
+    const tokenMatches = await bcrypt.compare(
+      refreshToken,
+      user.refreshTokenHash,
+    );
+    if (!tokenMatches) {
+      throw new UnauthorizedException('Access denied');
+    }
+
+    const tokens = await this.generateTokens(user.id, user.email);
+    await this.updateRefreshToken(user.id, tokens.refreshToken);
+
+    return tokens;
   }
 
   async loginWithOAuth(OAuthToken: string) {
@@ -113,5 +158,14 @@ export class LoginPageService {
       access_token: this.jwtService.sign(payloadJwt),
       user,
     };
+  }
+
+  async logout(userId: string) {
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        refreshTokenHash: null,
+      },
+    });
   }
 }

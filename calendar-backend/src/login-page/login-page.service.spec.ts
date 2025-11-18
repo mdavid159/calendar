@@ -6,7 +6,6 @@ import { LoginDto } from '../../dto/login.dto';
 import { JwtModule } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as R from 'remeda';
-import { jwtConstants } from './constants/jwt/jwt-constants';
 import 'jest-extended';
 
 describe('LoginPageService', () => {
@@ -22,7 +21,7 @@ describe('LoginPageService', () => {
       imports: [
         JwtModule.register({
           global: true,
-          secret: jwtConstants.secret,
+          secret: process.env.JWT_ACCESS_SECRET,
         }),
       ],
       providers: [

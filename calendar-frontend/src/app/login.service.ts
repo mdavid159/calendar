@@ -13,10 +13,16 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<LoginResponseModel> {
-    return this.http.post<LoginResponseModel>(`${this.apiUrl}/login-page/login`, { email, password });
+    return this.http.post<LoginResponseModel>(`${this.apiUrl}/login-page/login`, { email, password }, { withCredentials: true });
   }
 
   OauthLogin(OAuthToken: string): Observable<LoginResponseModel> {
-    return this.http.post<LoginResponseModel>(`${this.apiUrl}/login-page/google`, { OAuthToken });
+    return this.http.post<LoginResponseModel>(`${this.apiUrl}/login-page/google`, { OAuthToken }, { withCredentials: true });
+  }
+
+  refresh(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/login-page/refresh`, {
+      withCredentials: true,
+    });
   }
 }
