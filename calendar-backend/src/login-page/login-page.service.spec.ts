@@ -70,7 +70,7 @@ describe('LoginPageService', () => {
       'surname',
       'birthDate',
     ]);
-    expect(result).toContainKeys(['access_token', 'user']);
-    expect(resultUserField).toEqual(userField); // npm run test
+    expect(result).toContainKeys(['accessToken', 'refreshToken', 'user']);
+    expect(resultUserField).toEqual(userField);
   });
 });
