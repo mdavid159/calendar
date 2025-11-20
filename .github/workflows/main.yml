@@ -21,5 +21,5 @@ jobs:
       - run: npm ci
       - run: npm test
         env:
-          secretOrKey: ${{ secrets.JWT_ACCESS_SECRET }}
+          JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
       - run: npm run build
