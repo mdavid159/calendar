@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import {RegisterSchema} from '../schemas/register-schema';
 import {RegisterService} from '../register.service';
 import {Router} from '@angular/router';
+var dayjs = require('dayjs');
 
 @Component({
   selector: 'app-register-page',
@@ -26,7 +27,7 @@ export class RegisterPageComponent {
       email: this.email,
       name: this.name,
       surname: this.surname,
-      birthDate: this.birthDate,
+      birthDate: dayjs(this.birthDate),
       password: this.password,
     });
 
