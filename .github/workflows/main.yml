@@ -23,3 +23,4 @@ jobs:
         env:
           JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
       - run: npm run build
+      - run: timeout 30 node dist/src/main.js
