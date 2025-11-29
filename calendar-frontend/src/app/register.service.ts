@@ -9,7 +9,7 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  register(email: string, name: string, surname: string, birthDate: string, password: string) {
+  register(email: string, name: string, surname: string, birthDate: Date, password: string) {
     return this.http.post(`${this.apiUrl}/register-page/register`, {
       email,
       name,
