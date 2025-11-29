@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import {RegisterSchema} from '../schemas/register-schema';
 import {RegisterService} from '../register.service';
 import {Router} from '@angular/router';
+import dayjs from "dayjs";
+dayjs().format();
 
 @Component({
   selector: 'app-register-page',
@@ -26,14 +28,14 @@ export class RegisterPageComponent {
       email: this.email,
       name: this.name,
       surname: this.surname,
-      birthDate: this.birthDate,
+      birthDate: dayjs(this.birthDate).toDate(),
       password: this.password,
     });
 
     if (!schemaResult.success) {
       alert(`Invalid email address: ${schemaResult.error}`);
     } else {
-      this.registerService.register(this.email, this.name, this.surname, this.birthDate, this.password).subscribe({
+      this.registerService.register(this.email, this.name, this.surname, dayjs(this.birthDate).toDate(), this.password).subscribe({
         next: () => {
           alert('Registration successful, please login');
           this.router.navigate(['/login']);

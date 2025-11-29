@@ -3,7 +3,7 @@ export interface LoginResponseModel {
   user: {
     id: string;
     email: string;
-    birthDate: string;
+    birthDate: Date;
     name: string;
     surname: string;
   };

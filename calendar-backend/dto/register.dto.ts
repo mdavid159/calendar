@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsDate, IsEmail, IsString } from 'class-validator';
 
 export class RegisterPageDto {
   @IsString()
@@ -7,12 +7,12 @@ export class RegisterPageDto {
   @IsString()
   surname: string;
 
-  @IsString()
-  birthDate: string;
+  @IsDate()
+  birthDate: Date;
 
   @IsString()
   password: string;
 
-  @IsString()
+  @IsEmail()
   email: string;
 }

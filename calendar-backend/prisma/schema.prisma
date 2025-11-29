@@ -22,7 +22,7 @@ model User {
   password         String
   name             String
   surname          String
-  birthDate        String
+  birthDate        DateTime  @default(now())
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
   OAuthLogin       Boolean   @default(false)
