@@ -41,7 +41,7 @@ export class LoginPageComponent implements OnInit {
         console.log('Login success: ',response);
         sessionStorage.setItem('access_token', response.access_token); // CHANGE TO LOCALSTORAGE
         this.loginService.clientInfo = response.user;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/scheduling']);
       },
       error: (err) => {
         if (err.status === 404) {
@@ -69,7 +69,7 @@ export class LoginPageComponent implements OnInit {
           console.log('Login success:', response)
           sessionStorage.setItem('access_token', response.access_token); // CHANGE TO LOCALSTORAGE
           this.loginService.clientInfo = response.user;
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/scheduling']);
         },
         error: (err) => {
           if (err.status === 401) {

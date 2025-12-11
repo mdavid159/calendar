@@ -1,0 +1,69 @@
+<div class="side-panel">
+  <div class="close-div">
+    <button class="close" (click)="close()">
+    <svg viewBox="0 0 24 24" width="24" height="24">
+      <path 
+        d="M5 4.8L19 19.2M19 4.8L5 19.2"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        fill="none"
+      />
+    </svg>
+  </button>
+  </div>
+  <div class="meeting-info-div">
+    <div class=""></div>
+    <div>
+      <input type="checkbox">One-on-one
+      <p>1 host 
+        <span>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path 
+            d="M5 12H19M19 12L13 6M19 12L13 18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        1 invitee</p>
+      <input type="checkbox">Group
+      <p>1 host 
+        <span>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path 
+            d="M5 12H19M19 12L13 6M19 12L13 18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        multiple invitees</p>
+      <input type="checkbox">Collective
+      <p>Multiple hosts 
+        <span>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path 
+            d="M5 12H19M19 12L13 6M19 12L13 18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        multiple invitees</p>
+    </div>
+  </div>
+  <div class="duration-div"></div>
+  <div class="location-div"></div>
+  <div class="avaliability-div"></div>
+  <div class="hostname-div"></div>
+  <div class="space-div"></div>
+  <div class="options-div"></div>
+  <button [ngClass]="cn.button">daddy</button>
+</div>

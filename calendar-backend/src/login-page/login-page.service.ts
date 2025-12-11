@@ -8,6 +8,7 @@ import { LoginDto } from '../../dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
+import * as R from 'remeda';
 
 @Injectable()
 export class LoginPageService {
@@ -47,7 +48,7 @@ export class LoginPageService {
   async loginWithEmailAndPassword(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    const user = await this.prismaService.user.findUnique({
+    const userWithPassword = await this.prismaService.user.findUnique({
       where: { email: email },
       select: {
         id: true,
@@ -55,27 +56,32 @@ export class LoginPageService {
         birthDate: true,
         name: true,
         surname: true,
+        password: true,
       },
     });
 
-    if (!user) {
+    if (!userWithPassword) {
       throw new NotFoundException('User not found');
     }
 
-    const userPassword = await this.prismaService.user.findUnique({
-      where: { email: email },
-      select: { password: true },
-    });
-
     const isPasswordValid = await bcrypt.compare(
       password,
-      userPassword!.password,
+      userWithPassword.password,
     );
 
     if (isPasswordValid) {
-      const tokens = await this.generateTokens(user.id, user.email);
-      await this.updateRefreshToken(user.id, tokens.refreshToken);
-
+      const tokens = await this.generateTokens(
+        userWithPassword.id,
+        userWithPassword.email,
+      );
+      await this.updateRefreshToken(userWithPassword.id, tokens.refreshToken);
+      const user = R.pick(userWithPassword, [
+        'id',
+        'email',
+        'birthDate',
+        'name',
+        'surname',
+      ]);
       return { user, ...tokens };
     } else {
       throw new UnauthorizedException('Invalid password');
@@ -126,7 +132,7 @@ export class LoginPageService {
       },
     });
 
-    const user = await this.prismaService.user.findUnique({
+    const userWithPassword = await this.prismaService.user.findUnique({
       where: { email: email },
       select: {
         id: true,
@@ -134,10 +140,11 @@ export class LoginPageService {
         birthDate: true,
         name: true,
         surname: true,
+        password: true,
       },
     });
 
-    if (!user) {
+    if (!userWithPassword) {
       throw new NotFoundException('User not found!');
     }
 
@@ -146,17 +153,28 @@ export class LoginPageService {
         data: {
           provider: 'google',
           providerAccountId: sub,
-          userId: user.id,
+          userId: userWithPassword.id,
         },
         include: { user: true },
       });
     }
 
-    const payloadJwt = { sub: user.id, username: user.email };
+    const tokens = await this.generateTokens(
+      userWithPassword.id,
+      userWithPassword.email,
+    );
+    await this.updateRefreshToken(userWithPassword.id, tokens.refreshToken);
+    const user = R.pick(userWithPassword, [
+      'id',
+      'email',
+      'birthDate',
+      'name',
+      'surname',
+    ]);
 
     return {
-      access_token: this.jwtService.sign(payloadJwt),
       user,
+      ...tokens,
     };
   }
 
