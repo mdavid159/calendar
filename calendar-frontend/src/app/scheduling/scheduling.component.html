@@ -1,0 +1,16 @@
+<div class="scheduling-layout">
+  <div class="main-content">
+    <h1>Welcome, {{clientInfo.name}} {{clientInfo.surname}}</h1>
+    <div>
+      <button (click)="openEditor()">Create new meeting</button>
+    </div>
+    <div>
+      <div class="meeting-container">
+        see all meetings
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-outlet">
+    <router-outlet name="sidebar"></router-outlet>
+  </div>
+</div>

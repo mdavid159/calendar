@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateMeetingComponent } from './create-meeting.component';
+import { SelectorMenuComponent } from './selector-menu.component';
 
-describe('CreateMeetingComponent', () => {
-  let component: CreateMeetingComponent;
-  let fixture: ComponentFixture<CreateMeetingComponent>;
+describe('SelectorMenuComponent', () => {
+  let component: SelectorMenuComponent;
+  let fixture: ComponentFixture<SelectorMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateMeetingComponent]
+      imports: [SelectorMenuComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateMeetingComponent);
+    fixture = TestBed.createComponent(SelectorMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

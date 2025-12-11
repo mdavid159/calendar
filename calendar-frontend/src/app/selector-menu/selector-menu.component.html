@@ -1,0 +1,30 @@
+<div class="layout-container">
+    <div class="side-content">
+      <div class="more-settings">
+        <span class="nav-item"
+              [routerLink]="['/home/scheduling']"
+              routerLinkActive="active"><a>Scheduling</a></span>
+  
+        <span class="nav-item"
+              [routerLink]="['/home/meetings']"
+              routerLinkActive="active"><a>Meetings</a></span>
+  
+        <span class="nav-item"
+              [routerLink]="['/home/avaliability']"
+              routerLinkActive="active"><a>Avaliability</a></span>
+  
+        <span class="nav-item"
+              [routerLink]="['/home/contacts']"
+              routerLinkActive="active"><a>Contacts</a></span>
+  
+        <span class="nav-item"
+              [routerLink]="['/home/help']"
+              routerLinkActive="active"><a>Help</a></span>
+      </div>
+    </div>
+  
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
