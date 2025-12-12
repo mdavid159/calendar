@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoginSchema } from '../schemas/login-schema';
@@ -17,6 +17,10 @@ declare const google: any;
 })
 export class LoginPageComponent implements OnInit {
   constructor(private router: Router, private loginService: LoginService) {}
+
+  lastNavigation = computed(() => {
+    return this.router.lastSuccessfulNavigation();
+  });
 
   email = '';
   password = '';
