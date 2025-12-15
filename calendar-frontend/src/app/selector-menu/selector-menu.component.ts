@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,5 +9,9 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } fr
 })
 export class SelectorMenuComponent {
   constructor(private router: Router, private route: ActivatedRoute){}
+
+  lastNavigation = computed(() => {
+    return this.router.lastSuccessfulNavigation();
+  });
 
 }

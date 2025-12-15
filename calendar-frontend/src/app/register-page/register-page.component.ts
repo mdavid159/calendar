@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, computed} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {RegisterSchema} from '../schemas/register-schema';
 import {RegisterService} from '../register.service';
@@ -16,6 +16,10 @@ dayjs().format();
 
 export class RegisterPageComponent {
   constructor(private router: Router, private registerService: RegisterService) {}
+
+  lastNavigation = computed(() => {
+    return this.router.lastSuccessfulNavigation();
+  });
 
   name: string = '';
   surname: string = '';

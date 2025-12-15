@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { css } from '../../styles';
 import { NgClass } from '@angular/common';
@@ -18,6 +18,10 @@ export class SchedulingEditorComponent implements OnInit {
   eventId: string | null = null;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
+
+  lastNavigation = computed(() => {
+    return this.router.lastSuccessfulNavigation();
+  });
 
   ngOnInit() {
     this.eventId = this.route.snapshot.paramMap.get('id');
